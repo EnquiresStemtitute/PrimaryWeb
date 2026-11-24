@@ -1,11 +1,10 @@
-const cacheName = "Stemtitute-Stemtitute Primary App-1.0.7";
+const cacheName = "Stemtitute-Stemtitute Primary App-1.0.8";
 const contentToCache = [
     "Build/PrimaryWeb1124.loader.js",
     "Build/PrimaryWeb1124.framework.js.unityweb",
     "Build/PrimaryWeb1124.data.unityweb",
     "Build/PrimaryWeb1124.wasm.unityweb",
     "TemplateData/style.css"
-
 ];
 
 // ==========================================
@@ -54,7 +53,7 @@ self.addEventListener('fetch', function (e) {
 
     // 針對同源資源
     e.respondWith((async function () {
-        // 1. 先找快取
+        // 1. 先找快取 (POST 請求不會在快取裡，所以會直接跳過)
         let response = await caches.match(e.request);
         if (response) { 
             return response; 
@@ -63,7 +62,9 @@ self.addEventListener('fetch', function (e) {
         // 2. 去網路抓
         try {
             response = await fetch(e.request);
-            if (response && response.status === 200) {
+            
+            // 🌟 關鍵修正：加上 e.request.method === 'GET' 判斷
+            if (response && response.status === 200 && e.request.method === 'GET') {
                 const cache = await caches.open(cacheName);
                 cache.put(e.request, response.clone());
             }
@@ -71,7 +72,6 @@ self.addEventListener('fetch', function (e) {
         } catch (error) {
             console.warn('[Service Worker] Fetch failed, network might be down:', error);
             
-            // 🌟 關鍵修正：不要再回傳假 408，直接找快取，或者回傳空值讓瀏覽器正常報錯
             let cacheResponse = await caches.match(e.request);
             if (cacheResponse) return cacheResponse;
             
