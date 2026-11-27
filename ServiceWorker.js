@@ -1,10 +1,11 @@
-const cacheName = "Stemtitute-Stemtitute Primary App-1.0.8";
+const cacheName = "Stemtitute-Stemtitute Primary App-1.0.9";
 const contentToCache = [
-    "Build/PrimaryWeb1124.loader.js",
-    "Build/PrimaryWeb1124.framework.js.unityweb",
-    "Build/PrimaryWeb1124.data.unityweb",
-    "Build/PrimaryWeb1124.wasm.unityweb",
+    "Build/PrimaryWeb1127.loader.js",
+    "Build/PrimaryWeb1127.framework.js.unityweb",
+    "Build/PrimaryWeb1127.data.unityweb",
+    "Build/PrimaryWeb1127.wasm.unityweb",
     "TemplateData/style.css"
+
 ];
 
 // ==========================================
